@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Single-post sidebar regression test</title>
+<link rel="stylesheet" href="../gravitas-coaching/assets/css/main.css">
+<style id="generated-css"></style>
+<style>
+	#test-report{position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#0c1d30;color:#fff;font:14px/1.5 monospace;padding:12px 16px;white-space:pre-wrap}
+</style>
+</head>
+<!--
+	Simulates a single post where Theme Options has:
+	  Blog archive sidebar  = No sidebar  -> body.gravitas-sidebar-none
+	  Single-post sidebar   = Right       -> body.gravitas-single-sidebar-right
+	Generated CSS rules are copied verbatim from Gravitas Core output_css().
+-->
+<body class="single single-post gravitas-sidebar-none gravitas-single-sidebar-right">
+<main id="primary" class="site-main single-post-main soledad-single-style gravitas-single-sidebar-right">
+	<article class="post">
+		<div class="container article-layout">
+			<div class="single-post-content">
+				<header class="soledad-entry-header"><h1 class="soledad-title">Seven signals that strengthen executive presence</h1></header>
+				<div class="entry-content"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.</p><p>Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper.</p></div>
+			</div>
+			<aside class="site-sidebar" aria-label="Sidebar">
+				<section class="widget soledad-sidebar-widget"><h3 class="widget-title soledad-box-heading"><span>RECENT POSTS</span></h3><ul><li>Post one</li><li>Post two</li></ul></section>
+				<section class="widget soledad-sidebar-widget"><h3 class="widget-title soledad-box-heading"><span>CATEGORIES</span></h3><ul><li>Leadership (3)</li></ul></section>
+			</aside>
+		</div>
+	</article>
+</main>
+<div id="test-report">running…</div>
+<script>
+const OLD = '.gravitas-sidebar-none .content-with-sidebar,.gravitas-sidebar-none .article-layout{grid-template-columns:1fr!important}.gravitas-sidebar-none .site-sidebar,.gravitas-single-sidebar-none .single-post-main .site-sidebar{display:none}';
+const NEW = 'body.gravitas-sidebar-none:not(.single-post) .content-with-sidebar,body.gravitas-sidebar-none:not(.single-post) .article-layout{grid-template-columns:1fr!important}body.gravitas-sidebar-none:not(.single-post) .site-sidebar,.gravitas-single-sidebar-none .single-post-main .site-sidebar{display:none}';
+const style = document.getElementById('generated-css');
+const body = document.body;
+const aside = document.querySelector('.site-sidebar');
+const content = document.querySelector('.single-post-content');
+
+function measure() {
+	const a = aside.getBoundingClientRect();
+	const c = content.getBoundingClientRect();
+	return { visible: getComputedStyle(aside).display !== 'none' && a.width > 0, besideContent: a.left >= c.right - 1 };
+}
+function run(label, css, classes) {
+	style.textContent = css;
+	body.className = classes;
+	const m = measure();
+	return { label, ...m };
+}
+const right = 'single single-post gravitas-sidebar-none gravitas-single-sidebar-right';
+const none  = 'single single-post gravitas-sidebar-none gravitas-single-sidebar-none';
+const archive = 'blog gravitas-sidebar-none';
+const results = [
+	run('OLD css | single, sidebar=right', OLD, right),
+	run('NEW css | single, sidebar=right', NEW, right),
+	run('NEW css | single, sidebar=none ', NEW + '.gravitas-single-sidebar-none .single-post-main .article-layout{grid-template-columns:1fr!important}', none),
+	run('NEW css | archive, sidebar=none', NEW, archive),
+];
+const expect = [false, true, false, false];
+let pass = true;
+const lines = results.map((r, i) => {
+	const ok = r.visible === expect[i] && (!r.visible || r.besideContent);
+	pass = pass && (i === 0 ? r.visible === false : ok);
+	return `${ok || i === 0 ? 'OK  ' : 'FAIL'} ${r.label} -> visible=${r.visible} beside=${r.besideContent}`;
+});
+// Leave final state on the fixed case for a screenshot.
+run('final', NEW, right);
+document.getElementById('test-report').textContent = (pass ? 'RESULT: PASS' : 'RESULT: FAIL') + '\n' + lines.join('\n');
+window.__sidebarTest = { pass, results };
+</script>
+</body>
+</html>

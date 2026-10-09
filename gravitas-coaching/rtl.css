@@ -1,0 +1,11 @@
+body { direction: rtl; unicode-bidi: embed; }
+.primary-menu .sub-menu { right: -22px; left: auto; }
+.primary-menu .sub-menu .sub-menu { right: calc(100% + 8px); left: auto; }
+.input-with-icon .elevora-icon { right: 14px; left: auto; }
+.input-with-icon input { padding-right: 42px; padding-left: 14px; }
+.finder-form input, .finder-form select { border-right: 1px solid rgba(255,255,255,.25); border-left: 0; }
+.service-card__number { right: auto; left: 30px; }
+.trainer-card__rating { right: auto; left: 16px; }
+.profile-hero__badge { right: auto; left: -18px; }
+.entry-content blockquote { border-right: 4px solid var(--color-accent); border-left: 0; }
+

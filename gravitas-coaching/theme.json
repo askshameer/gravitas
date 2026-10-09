@@ -1,0 +1,71 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "settings": {
+    "appearanceTools": true,
+    "layout": {
+      "contentSize": "760px",
+      "wideSize": "1220px"
+    },
+    "color": {
+      "defaultPalette": false,
+      "palette": [
+        { "slug": "ink", "name": "Ink", "color": "#0c1d30" },
+        { "slug": "paper", "name": "Paper", "color": "#f7f3eb" },
+        { "slug": "coral", "name": "Gold", "color": "#c6a454" },
+        { "slug": "sage", "name": "Sage", "color": "#8b7646" },
+        { "slug": "plum", "name": "Plum", "color": "#172f49" },
+        { "slug": "white", "name": "White", "color": "#ffffff" }
+      ]
+    },
+    "spacing": {
+      "units": ["px", "rem", "em", "%", "vw", "vh"]
+    },
+    "typography": {
+      "fluid": true,
+      "fontFamilies": [
+        {
+          "fontFamily": "'Plus Jakarta Sans', 'DM Sans', -apple-system, sans-serif",
+          "name": "Gravitas Sans",
+          "slug": "elevora-sans"
+        },
+        {
+          "fontFamily": "'Playfair Display', Georgia, serif",
+          "name": "Gravitas Serif",
+          "slug": "elevora-serif"
+        }
+      ]
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "#f7f3eb",
+      "text": "#0c1d30"
+    },
+    "spacing": {
+      "blockGap": "1.5rem"
+    },
+    "typography": {
+      "fontFamily": "var(--wp--preset--font-family--elevora-sans)",
+      "fontSize": "18px",
+      "lineHeight": "1.7"
+    },
+    "elements": {
+      "heading": {
+        "typography": {
+          "fontFamily": "var(--wp--preset--font-family--elevora-serif)",
+          "fontWeight": "500",
+          "lineHeight": "1.08"
+        }
+      },
+      "link": {
+        "color": { "text": "#806323" }
+      },
+      "button": {
+        "border": { "radius": "6px" },
+        "color": { "background": "#0c1d30", "text": "#ffffff" },
+        "spacing": { "padding": { "top": "0.85rem", "right": "1.4rem", "bottom": "0.85rem", "left": "1.4rem" } }
+      }
+    }
+  }
+}

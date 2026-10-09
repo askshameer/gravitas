@@ -1,0 +1,9 @@
+# Archives & Backups
+*.zip
+*.tar.gz
+*.bak
+
+# Environment & IDE
+.vscode/
+.idea/
+*.log
